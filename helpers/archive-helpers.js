@@ -26,16 +26,28 @@ exports.initialize = function(pathsObj){
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(){
+  //create a url array
+  var arr = [];
+  //find our sites.txt file
+  var fileContents = fs.readFileSync(exports.paths.list, 'utf8');
+    //push each line into the url array
+  //return url array
 };
 
 exports.isUrlInList = function(){
+  //loop through url array
+    //return true if in there else false
 };
 
-exports.addUrlToList = function(){
+exports.addUrlToList = function(message){
+  fs.appendFile('./archives/sites.txt', '\n' + message, 'utf8');
 };
 
 exports.isURLArchived = function(){
+    //loop through url array
+    //return true if in there else false
 };
 
 exports.downloadUrls = function(){
+  //use chron- for each url, scrape the url
 };
