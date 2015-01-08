@@ -8,5 +8,27 @@
   <form method="POST">
     <input type="input" name="url"></input>
   </form>
+  <button class="send">
+    archive
+  </button>
+  <script src="../../node_modules/jquery/dist/jquery.js"></script>
+
+  <script>
+
+
+    $('.send').on('click', function(){
+      var $data = $('input').val();
+      console.log($data);
+      $.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:8080',
+        data: $data,
+        success: function(){
+           window.location.href='file:///Users/student/Desktop/2014-12-web-historian/web/public/loading.html';
+        }
+      })
+      $('input').val("");
+    })
+  </script>
 </body>
 </html>
