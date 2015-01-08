@@ -26,17 +26,18 @@ exports.initialize = function(pathsObj){
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(){
-  //create a url array
-  var arr = [];
-  //find our sites.txt file
-  var fileContents = fs.readFileSync(exports.paths.list, 'utf8');
-    //push each line into the url array
-  //return url array
+  var fileContents = fs.readFileSync('../web/archives/sites.txt', 'utf8');
+  return fileContents.split('\n');
 };
 
-exports.isUrlInList = function(){
-  //loop through url array
-    //return true if in there else false
+exports.isUrlInList = function(url){
+  var list = exports.readListOfUrls();
+  for( var i = 0; i < list.length; i++ ){
+    if(url === list[i]){
+      return true;
+    }
+  }
+  return false;
 };
 
 exports.addUrlToList = function(message){
