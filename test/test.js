@@ -3,6 +3,7 @@ var handler = require("../web/request-handler");
 var stubs = require("./stubs/stubs");
 var fs = require('fs');
 var archive = require("../helpers/archive-helpers");
+var toRun = require("../helpers/toRun");
 var path = require('path');
 var res;
 

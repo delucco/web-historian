@@ -2,13 +2,14 @@ var path = require('path');
 var archive = require('../helpers/archive-helpers');
 var headers = require('./http-helpers');
 var fs = require('fs');
+var url = require('url');
 // require more modules/folders here!
 
 
-var sendResponse = function(response, data, statusCode){
+exports.sendResponse = function(response, data, statusCode){
   statusCode = statusCode || 200;
   response.writeHead(statusCode, headers.headers);
-  response.end(archive.paths.list);
+  response.end(data);
 };
 
 var collectData = function (request, callback){
@@ -25,7 +26,23 @@ exports.handleRequest = function (request, response) {
     console.log('posted');
 
   if (request.method === 'OPTIONS') {
-    sendResponse(response, null);
+    exports.sendResponse(response, null);
+
+  } else if (request.method === 'GET'){
+    var urlPath = url.parse(request.url).pathname;
+    if( urlPath === '/' ){
+      urlPath = '/index.html';
+    }
+    //exports.sendResponse(response, urlPath);
+    headers.serveAssets(response, urlPath, function(){
+    // trim leading slash if present
+      if( urlPath[0] === '/' ) { urlPath = urlPath.slice(1)}
+      if( archive.isUrlInList(urlPath)){ // if yes
+        headers.sendRedirect(response, '/loading.html');
+      } else { // if no
+        headers.send404(response);
+      }
+    });
 
   } else if (request.method === 'POST'){
     collectData(request, function(message){
@@ -37,22 +54,15 @@ exports.handleRequest = function (request, response) {
       };
       archive.downloadUrls();
 
-      sendResponse(response, "Hello World", 201);
+      exports.sendResponse(response, "Hello World", 201);
     })
 
   } else {
-    sendResponse(response, "Not found", 404);
+    exports.sendResponse(response, "Not found", 404);
 
   }
 };
 
 
-  // } else if (request.method === 'GET'){
-  //   sendResponse(response, {'results': 'messages'});
 
-  // , function (err){
-  //       if(err) {
-  //         return console.log(err);
-  //       }
-  //     }
 
