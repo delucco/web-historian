@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
+var html = require('/Users/student/2014-12-web-historian/workers/htmlfetcher.js');
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -26,7 +27,7 @@ exports.initialize = function(pathsObj){
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(){
-  var fileContents = fs.readFileSync('../web/archives/sites.txt', 'utf8');
+  var fileContents = fs.readFileSync('/Users/student/2014-12-web-historian/web/archives/sites.txt', 'utf8');
   return fileContents.split('\n');
 };
 
@@ -41,7 +42,7 @@ exports.isUrlInList = function(url){
 };
 
 exports.addUrlToList = function(message){
-  fs.appendFile('./archives/sites.txt', '\n' + message, 'utf8');
+  fs.appendFile('/Users/student/2014-12-web-historian/archives/sites.txt', '\n' + message, 'utf8');
 };
 
 exports.isURLArchived = function(){
@@ -51,4 +52,21 @@ exports.isURLArchived = function(){
 
 exports.downloadUrls = function(){
   //use chron- for each url, scrape the url
+  var list = exports.readListOfUrls();
+  for( var i = 0; i < list.length; i++ ){
+    html.fetcher(list[i]);
+  }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+

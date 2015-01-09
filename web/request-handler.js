@@ -29,15 +29,14 @@ exports.handleRequest = function (request, response) {
 
   } else if (request.method === 'POST'){
     collectData(request, function(message){
-      //console.log(message);
       if (!archive.isUrlInList(message)){
-        if (!fs.existsSync("./archives/sites/" + message)) {
-          fs.mkdirSync("./archives/sites/" + message);
-        }
+        fs.mkdirSync("./archives/sites/" + message);
         fs.appendFile('./archives/sites.txt', message + '\n', 'utf8');
       } else {
         console.log('already in list');
       };
+      archive.downloadUrls();
+
       sendResponse(response, "Hello World", 201);
     })
 
@@ -45,7 +44,6 @@ exports.handleRequest = function (request, response) {
     sendResponse(response, "Not found", 404);
 
   }
-  //res.end(archive.paths.list);
 };
 
 

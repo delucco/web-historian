@@ -2,6 +2,8 @@ archives/*
 archives/*.txt
 archives/sites/*.txt
 
+web/archives/*
+
 ###OSX###
 
 .DS_Store
